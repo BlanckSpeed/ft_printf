@@ -6,7 +6,7 @@
 /*   By: rlendine <rlendine@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:54:04 by rlendine          #+#    #+#             */
-/*   Updated: 2024/09/11 17:54:06 by rlendine         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:46:40 by rlendine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ static int	itoa_len(long long num)
 	int	len;
 
 	len = 0;
-	if (num < 0)
+	if (num <= 0)
 	{
 		len++;
 		num = -num;
 	}
-	else if (num == 0)
-		return (1);
 	while (num)
 	{
 		num = num / 10;
@@ -58,3 +56,26 @@ char	*ft_itoa(int n)
 	}
 	return (str);
 }
+/*
+#include <stdio.h>
+
+#define typeof(x) _Generic((x), \
+    int: "int", \
+    float: "float", \
+    double: "double", \
+    char*: "char*", \
+    default: "unknown")
+	
+int	main(void)
+{
+	int num;
+	char *str;
+
+	num = 42;
+	printf("El tipo de num es: %s\n", typeof(num));
+	str = ft_itoa(num);
+    printf("El tipo de num es: %s\n", typeof(str));
+	free(str);
+	return(0);
+}
+*/

@@ -6,40 +6,57 @@
 /*   By: rlendine <rlendine@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:55:12 by rlendine          #+#    #+#             */
-/*   Updated: 2024/09/11 19:23:33 by rodrigo          ###   ########.fr       */
+/*   Updated: 2024/09/13 14:28:38 by rlendine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_pointer(unsigned long num)
+static int	hex_pointer(unsigned long num)
 {
-	const char	*s;
-	int			i;
+	const char	*symbols;
+	int			len;
 
-	i = 0;
-	s = "0123456789abcdef";
+	len = 0;
+	symbols = "0123456789abcdef";
 	if (num >= 16)
 	{
-		i += ft_pointer(num / 16);
-		i += ft_pointer(num % 16);
+		len += hex_pointer(num / 16);
+		len += hex_pointer(num % 16);
 	}
 	else
-		i += write(1, &s[num], 1);
-	return (i);
+		len += write(1, &symbols[num], 1);
+	return (len);
 }
 
 int	ft_putptr(unsigned long pointer)
 {
-	int	i;
+	int	len;
 
-	i = 0;
+	len = 0;
 	if (!pointer)
-		i += write(1, "(nil)", 5);
+		len += write(1, "(nil)", 5);
 	else
 	{
-		i += write(1, "0x", 2);
-		i += ft_pointer(pointer);
+		len += write(1, "0x", 2);
+		len += hex_pointer(pointer);
 	}
-	return (i);
+	return (len);
 }
+/*
+int	main(void)
+{
+	unsigned long ptr1 = (unsigned long) &ptr1;  // Dirección de una variable
+    unsigned long ptr2 = 0;  // Puntero nulo
+
+    // Prueba con un puntero válido
+    ft_putptr(ptr1);
+    printf("\n");
+
+    // Prueba con un puntero nulo
+    ft_putptr(ptr2);
+    printf("\n");
+
+    return (0);
+}
+*/

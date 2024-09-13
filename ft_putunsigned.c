@@ -6,25 +6,22 @@
 /*   By: rlendine <rlendine@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:55:28 by rlendine          #+#    #+#             */
-/*   Updated: 2024/09/11 17:55:31 by rlendine         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:11:39 by rlendine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdlib.h>
 
 static int	itoa_len(long long num)
 {
 	int	len;
 
 	len = 0;
-	if (num < 0)
+	if (num <= 0)
 	{
 		len++;
 		num = -num;
 	}
-	else if (num == 0)
-		return (1);
 	while (num)
 	{
 		num = num / 10;
@@ -33,7 +30,7 @@ static int	itoa_len(long long num)
 	return (len);
 }
 
-char	*ft_uitoa(unsigned int n)
+static char	*ft_uitoa(unsigned int n)
 {
 	char			*str;
 	long long		num;
@@ -55,19 +52,38 @@ char	*ft_uitoa(unsigned int n)
 	return (str);
 }
 
-int	ft_putunsigned(unsigned int n)
+int	ft_putunsigned(unsigned int u_num)
 {
-	int		print_length;
-	char	*num;
+	int		len;
+	char	*str_num;
 
-	print_length = 0;
-	if (n == 0)
-		print_length += write(1, "0", 1);
+	len = 0;
+	if (u_num == 0)
+		len += write(1, "0", 1);
 	else
 	{
-		num = ft_uitoa(n);
-		print_length += ft_putstr(num);
-		free(num);
+		str_num = ft_uitoa(u_num);
+		len += ft_putstr(str_num);
+		free(str_num);
 	}
-	return (print_length);
+	return (len);
 }
+/*
+int	main(void)
+{
+	unsigned int test1 = 42;
+	unsigned int test2 = 0;
+	unsigned int test3 = 123456789;
+
+	// Prueba con el número 42
+	printf("Output length: %d\n", ft_putunsigned(test1));
+
+	// Prueba con el número 0
+	printf("Output length: %d\n", ft_putunsigned(test2));
+
+	// Prueba con el número 123456789
+	printf("Output length: %d\n", ft_putunsigned(test3));
+
+	return (0);
+}
+*/
